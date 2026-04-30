@@ -20,11 +20,11 @@ app_license = "MIT"
 
 # Document Events
 # ---------------
-doc_events = {
-    "Book Transaction": {
-        "before_submit": "library_management.library_management.doctype.book_transaction.book_transaction.before_submit",
-    }
-}
+# doc_events = {
+#     "Book Transaction": {
+#         "before_submit": "library_management.library_management.doctype.book_transaction.book_transaction.before_submit",
+#     }
+# }
 
 # Scheduled Tasks
 # ---------------

@@ -109,6 +109,7 @@ class BookTransaction(Document):
                 "book": self.book,
                 "transaction_type": "Issue",
                 "docstatus": 1,        # submitted
+                "actual_return_date": ("in", (None, "")),
             },
         )
         if not open_issue:
@@ -155,20 +156,14 @@ class BookTransaction(Document):
                 "book": self.book,
                 "transaction_type": "Issue",
                 "docstatus": 1,
+                "actual_return_date": ("in", (None, "")),
             },
             "name",
         )
         if issue_name:
-            issue_doc = frappe.get_doc("Book Transaction", issue_name)
-            issue_doc.actual_return_date = self.date
-            issue_doc.save(ignore_permissions=True)
-            issue_doc.cancel()
+            frappe.db.set_value(
+                "Book Transaction", issue_name, "actual_return_date", self.date
+            )
 
 
-# ------------------------------------------------------------------
-# Standalone hook called from hooks.py
-# ------------------------------------------------------------------
 
-def before_submit(doc, method):
-    """Entry point registered in hooks.py doc_events."""
-    doc.before_submit()
